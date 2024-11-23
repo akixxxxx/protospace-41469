@@ -36,18 +36,8 @@
         </div>
       </div>
     </header>
-<% if user_signed_in? %>
-  <div class="aa">
-    <% if @user_names.present? %> 
-      <% @user_names.each do |name| %> 
-        <p>こんにちは、<%= name %>さん</p>
-      <% end %>
-    <% else %>
-      <p>ユーザーが見つかりませんでした。</p>
-    <% end %>
-  </div>
-<% else %>
-<% end %>
+
+
 
     <%= yield %>
     <footer class="footer">
