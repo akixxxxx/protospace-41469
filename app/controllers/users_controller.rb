@@ -11,8 +11,8 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  def get
-    
+  def show
+    @user = User.find(params[:id])
   end
 
   private

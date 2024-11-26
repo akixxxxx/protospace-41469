@@ -1,7 +1,9 @@
 class PrototypesController < ApplicationController
+  before_action :set_prototype, except: [:index, :new, :create]
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
-    @user = User.all
-    @user_names = User.pluck(:name)
+    @prototypes = Prototype.includes(:user)
   end
 
   def new
@@ -9,17 +11,29 @@ class PrototypesController < ApplicationController
   end
 
   def create
-    @prototype = Prototype.all
-    Prototype.create(prototype_params)
+    @prototype = Prototype.new(prototype_params)
     if @prototype.save
-      redirect_to root_path, notice: 'Prototype was successfully created.' 
+      redirect_to root_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
+
+  def show
+      # @comment = Comment.new
+      # @comments = @prototype.comments
+  end
+
 
   private 
   def prototype_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
   end
+
+  def set_prototype
+    @prototype = Prototype.find(params[:id])
+  end
+
+
 end
+
