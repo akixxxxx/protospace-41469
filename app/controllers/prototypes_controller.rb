@@ -22,8 +22,23 @@ class PrototypesController < ApplicationController
   def show
       # @comment = Comment.new
       # @comments = @prototype.comments
+  end 
+  
+  def edit
   end
 
+  def update
+    if @prototype.update(prototype_params)
+      redirect_to prototype_path(@prototype)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @prototype.destroy
+    redirect_to root_path
+  end
 
   private 
   def prototype_params
